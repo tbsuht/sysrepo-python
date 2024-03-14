@@ -33,7 +33,7 @@ download()
 	fi
 }
 
-ly_branch="${LIBYANG_BRANCH:-devel}"
+ly_branch="${LIBYANG_BRANCH:-master}"
 ly_src="${LIBYANG_SRC:-$toxdir/.ly.$ly_branch.src}"
 ly_prefix="$toxdir/.ly.$ly_branch"
 ly_build="$toxdir/.ly.$ly_branch.build"
