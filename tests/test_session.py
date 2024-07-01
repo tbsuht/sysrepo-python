@@ -64,7 +64,7 @@ class SessionTest(unittest.TestCase):
                 "name": "sysrepo-example",
                 "namespace": "n",
                 "feature": ["turbo"],
-                "location: ANY
+                "location": ANY
             }
             self.assertIn(modinfo, data)
 
