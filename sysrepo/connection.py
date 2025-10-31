@@ -42,19 +42,20 @@ class SysrepoConnection:
             Always cache running datastore data which makes mainly repeated retrieval of
             data much faster. Affects all sessions created on this connection.
         """
-        flags = 0
+        # Set context options to work with libyang-python
+        # This must be done before creating the connection
+        check_call(lib.sr_context_options, lib.SR_CTX_SET_PRIV_PARSED, 0, ffi.NULL)
+        
+        # Enable running cache if requested
         if cache_running:
-            flags |= lib.SR_CONN_CACHE_RUNNING
-
-        # mandatory flag to work with libyang-python
-        flags |= lib.SR_CONN_CTX_SET_PRIV_PARSED
+            lib.sr_cache_running(1)
 
         conn_p = ffi.new("sr_conn_ctx_t **")
         # valid_signals() is only available since python 3.8
         valid_signals = getattr(signal, "valid_signals", lambda: range(1, signal.NSIG))
         sigmask = signal.pthread_sigmask(signal.SIG_BLOCK, valid_signals())
         try:
-            check_call(lib.sr_connect, flags, conn_p)
+            check_call(lib.sr_connect, 0, conn_p)
             self.cdata = ffi.gc(conn_p[0], lib.sr_disconnect)
         finally:
             signal.pthread_sigmask(signal.SIG_SETMASK, sigmask)
@@ -110,7 +111,7 @@ class SysrepoConnection:
         """
         ctx = lib.sr_acquire_context(self.cdata)
         if not ctx:
-            raise SysrepoInternalError("sr_get_context failed")
+            raise SysrepoInternalError("sr_acquire_context failed")
         return libyang.Context(cdata=ctx)
 
     def release_context(self):
