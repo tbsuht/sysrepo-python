@@ -49,11 +49,11 @@ On a Debian/Ubuntu system:
 Compatibility
 -------------
 
-The current version requires at least C `sysrepo 2.2.0`__.
+The current version works with C `sysrepo 2.2.0`__ and later, including the upcoming sysrepo 3.x/4.x series from the devel branch.
 
 The last version of the bindings that works with C `sysrepo 1.x`__ is v0.7.0__.
 
-__ https://github.com/sysrepo/sysrepo/commit/8c48a7a50eb2
+__ https://github.com/sysrepo/sysrepo/tree/devel
 __ https://github.com/sysrepo/sysrepo/tree/libyang1
 __ https://pypi.org/project/sysrepo/0.7.0/
 

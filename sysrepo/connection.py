@@ -110,7 +110,7 @@ class SysrepoConnection:
         """
         ctx = lib.sr_acquire_context(self.cdata)
         if not ctx:
-            raise SysrepoInternalError("sr_get_context failed")
+            raise SysrepoInternalError("sr_acquire_context failed")
         return libyang.Context(cdata=ctx)
 
     def release_context(self):

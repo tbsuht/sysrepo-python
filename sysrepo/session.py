@@ -127,7 +127,7 @@ class SysrepoSession:
             raise SysrepoInternalError("sr_session_get_connection failed")
         ctx = lib.sr_acquire_context(conn)
         if not ctx:
-            raise SysrepoInternalError("sr_get_context failed")
+            raise SysrepoInternalError("sr_acquire_context failed")
 
         return libyang.Context(cdata=ctx)
 
