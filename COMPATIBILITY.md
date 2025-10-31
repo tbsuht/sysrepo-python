@@ -6,6 +6,23 @@ This Python wrapper has been updated to work with the upcoming sysrepo 3.x/4.x s
 (currently in the devel branch). The changes from sysrepo 2.x to 3.x/4.x include
 several function renames and API improvements.
 
+### API Changes Between SO Version 7 and 8
+
+Starting with SO version 8, several connection flags have been changed:
+
+#### Connection Flag Changes (SO 8+)
+
+- **`SR_CONN_CACHE_RUNNING` removed** - This flag has been replaced with a dedicated function:
+  - Old: Pass `SR_CONN_CACHE_RUNNING` flag to `sr_connect()`
+  - New: Call `sr_cache_running(1)` to enable or `sr_cache_running(0)` to disable
+  
+- **`SR_CONN_CTX_SET_PRIV_PARSED` renamed and moved** - This flag is now in a separate enum:
+  - Old: Pass `SR_CONN_CTX_SET_PRIV_PARSED` as connection flag
+  - New: Use `SR_CTX_SET_PRIV_PARSED` from `sr_context_flag_t` enum
+  - Set via: `sr_context_options(SR_CTX_SET_PRIV_PARSED, apply, &prev_opts)`
+
+The wrapper now uses these new APIs when compiled against SO version 8.
+
 ### API Changes Implemented
 
 Based on the compatibility notes in sysrepo's `compatibility/6.0.0_to_7.0.0/CHANGES`,
